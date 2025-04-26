@@ -7,14 +7,14 @@
 }
 
 :root {
-    --primary-color: #7952b3;
-    --secondary-color: #5a41a0;
+    --primary-color: #FF0000; /* Red color like in the reference */
+    --secondary-color: #0044AA; /* Blue color like in the reference */
     --success-color: #42bca3;
     --warning-color: #ff9e00;
     --background-color: #f8f9fa;
     --text-color: #212529;
     --light-gray: #e9ecef;
-    --border-radius: 12px;
+    --border-radius: 0px; /* Square corners like in the reference */
     --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
@@ -234,22 +234,92 @@ header p {
     font-weight: 600;
 }
 
-/* Updated photo strip preview for vertical layout with 3 photos and better spacing */
+/* Updated photo strip preview for vertical layout with mail-style border */
 .photo-strip-preview {
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
     background-color: white;
-    border-radius: var(--border-radius);
+    border-radius: 0; /* Square corners for mail-style */
     box-shadow: var(--box-shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    padding: 30px 20px;
-    gap: 40px; /* Increased gap between photos */
-    min-height: 550px; /* Adjusted for 3 photos */
+    justify-content: space-between;
+    padding: 0; /* Remove padding to match reference */
+    gap: 0; /* Remove gap to match reference */
+    min-height: 600px;
+    position: relative;
+    border: 10px solid white; /* White border inside */
+    outline: 2px dashed #ccc; /* Dotted line for mail effect */
+    outline-offset: -6px;
+}
+
+.photo-strip-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to right, var(--primary-color) 33%, var(--secondary-color) 33%, var(--secondary-color) 66%, var(--primary-color) 66%);
+}
+
+.photo-strip-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to right, var(--primary-color) 33%, var(--secondary-color) 33%, var(--secondary-color) 66%, var(--primary-color) 66%);
+}
+
+/* Photo strip title and footer styling */
+.photo-strip-title, .photo-strip-footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    z-index: 5;
+}
+
+.photo-strip-title {
+    margin-top: 25px;
+}
+
+.photo-strip-footer {
+    margin-bottom: 25px;
+}
+
+.photo-strip-title h3, .photo-strip-footer h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.photo-strip-title p {
+    font-size: 10px;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Mail-style dotted border around the strip */
+.photo-strip-preview:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 2px dashed #ccc;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .strip-placeholder {
@@ -259,53 +329,20 @@ header p {
     height: 100%;
     display: flex;
     align-items: center;
+    z-index: 2;
 }
 
 .photo-cell {
     width: 100%;
-    height: 130px; /* Slightly bigger photos */
-    border-radius: calc(var(--border-radius) - 2px);
+    height: 150px; /* Taller photos to match reference */
+    border-radius: 0; /* Square photos to match reference */
     overflow: hidden;
     background-color: var(--light-gray);
     position: relative;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: none; /* No shadow to match reference */
     transition: all 0.3s ease;
-    margin-bottom: 15px; /* Additional spacing */
-}
-
-.photo-cell img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.photo-cell.loaded img {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.photo-cell.loaded {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.photo-cell::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--light-gray);
-    z-index: 1;
-}
-
-.photo-cell.loaded::before {
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    margin: 0; /* Remove margin to match reference */
+    border: 5px solid white; /* White border between photos */
 }
 
 /* Gallery */
@@ -336,7 +373,7 @@ header p {
 }
 
 #photoGallery canvas {
-    border-radius: var(--border-radius);
+    border-radius: 0; /* Square corners to match reference */
     box-shadow: var(--box-shadow);
     margin-top: 20px;
     max-width: 100%;

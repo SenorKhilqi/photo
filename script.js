@@ -174,6 +174,12 @@ function createPhotoStripPreview() {
     // Clear existing content
     photoStripPreview.innerHTML = '';
     
+    // Add title div at the top
+    const titleDiv = document.createElement('div');
+    titleDiv.classList.add('photo-strip-title');
+    titleDiv.innerHTML = '<h3>SMARTPEOPLE</h3><p>MOST SMART TECHNOLOGY</p>';
+    photoStripPreview.appendChild(titleDiv);
+    
     // Create 3 empty cells
     for (let i = 0; i < 3; i++) {
         const photoCell = document.createElement('div');
@@ -186,6 +192,12 @@ function createPhotoStripPreview() {
         photoCell.appendChild(img);
         photoStripPreview.appendChild(photoCell);
     }
+    
+    // Add footer div at the bottom
+    const footerDiv = document.createElement('div');
+    footerDiv.classList.add('photo-strip-footer');
+    footerDiv.innerHTML = '<h3>BACK TO</h3><h3>OFFICE</h3>';
+    photoStripPreview.appendChild(footerDiv);
 }
 
 // Function to add a photo to the strip preview
@@ -228,85 +240,74 @@ function updateFinalPhotoStrip() {
     // Create a canvas for the final photo strip
     photoStripCanvas = document.createElement('canvas');
     
-    // Changed dimensions to better fit vertical layout with 3 photos
-    const stripWidth = 600;
-    const stripHeight = 1000; // Reduced for 3 photos instead of 4
+    // Adjusted dimensions to match reference image ratio
+    const stripWidth = 400;
+    const stripHeight = 900;
     photoStripCanvas.width = stripWidth;
     photoStripCanvas.height = stripHeight;
     
     const ctx = photoStripCanvas.getContext('2d');
-    // Fill with gradient background
-    const gradient = ctx.createLinearGradient(0, 0, 0, stripHeight);
-    gradient.addColorStop(0, '#ffffff');
-    gradient.addColorStop(1, '#f0f0f0');
-    ctx.fillStyle = gradient;
+    
+    // Fill with white background
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, stripWidth, stripHeight);
     
-    // Add decorative border
-    ctx.strokeStyle = '#7952b3';  // Match primary color
-    ctx.lineWidth = 10;
-    ctx.strokeRect(10, 10, stripWidth - 20, stripHeight - 20);
+    // Add red-blue border at top and bottom (air mail style)
+    const borderHeight = 30;
     
-    // Draw a nice header
-    ctx.fillStyle = '#7952b3';
-    ctx.font = 'bold 40px Poppins, Arial';
+    // Top border
+    ctx.fillStyle = '#FF0000'; // Red
+    ctx.fillRect(0, 0, stripWidth/3, borderHeight);
+    ctx.fillStyle = '#0044AA'; // Blue
+    ctx.fillRect(stripWidth/3, 0, stripWidth/3, borderHeight);
+    ctx.fillStyle = '#FF0000'; // Red
+    ctx.fillRect(2*stripWidth/3, 0, stripWidth/3, borderHeight);
+    
+    // Bottom border
+    ctx.fillStyle = '#FF0000'; // Red
+    ctx.fillRect(0, stripHeight - borderHeight, stripWidth/3, borderHeight);
+    ctx.fillStyle = '#0044AA'; // Blue
+    ctx.fillRect(stripWidth/3, stripHeight - borderHeight, stripWidth/3, borderHeight);
+    ctx.fillStyle = '#FF0000'; // Red
+    ctx.fillRect(2*stripWidth/3, stripHeight - borderHeight, stripWidth/3, borderHeight);
+    
+    // Add header text
+    ctx.fillStyle = '#000000';
     ctx.textAlign = 'center';
-    ctx.fillText('Photo Booth', stripWidth / 2, 70);
+    ctx.font = 'bold 28px Anton, sans-serif';
+    ctx.fillText('SMARTPEOPLE', stripWidth/2, borderHeight + 50);
     
-    const date = new Date().toLocaleDateString();
-    ctx.font = '20px Poppins, Arial';
-    ctx.fillText(date, stripWidth / 2, 110);
+    ctx.font = '14px Poppins, sans-serif';
+    ctx.fillText('MOST SMART TECHNOLOGY', stripWidth/2, borderHeight + 75);
     
-    // Calculate dimensions for each photo - now vertically stacked with increased spacing
-    const photoWidth = stripWidth - 80;  // 40px margin on each side
-    const photoHeight = Math.floor((stripHeight - 300) / 3); // Space for 3 photos and header/footer
-    const spacing = 60; // Increased space between photos
+    // Calculate dimensions for each photo
+    const photoWidth = stripWidth - 60;  // 30px margin on each side
+    const photoHeight = 160; // Fixed height for each photo
+    const spacing = 20; // Space between photos
+    const startY = borderHeight + 100; // Starting position after header
     
-    // Draw each photo vertically stacked
+    // Draw each photo
     photoStrip.forEach((photoURL, index) => {
         const img = new Image();
         img.onload = () => {
-            // Calculate position (centered horizontally)
-            const y = 150 + index * (photoHeight + spacing);
-            
-            // Draw a drop shadow
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 5;
-            
-            // Draw photo background/frame
-            ctx.fillStyle = 'white';
-            ctx.fillRect(40, y, photoWidth, photoHeight);
-            
-            // Reset shadow for the image
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
+            // Calculate position
+            const y = startY + index * (photoHeight + spacing);
             
             // Draw the photo with proper aspect ratio
-            drawImageProp(ctx, img, 40, y, photoWidth, photoHeight);
+            drawImageProp(ctx, img, 30, y, photoWidth, photoHeight);
             
-            // Draw a border around the photo
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(40, y, photoWidth, photoHeight);
+            // Draw a thin border around the photo
+            ctx.strokeStyle = '#dddddd';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(30, y, photoWidth, photoHeight);
             
-            // Add photo number
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-            ctx.fillRect(40, y, 40, 30);
-            ctx.fillStyle = '#333';
-            ctx.font = 'bold 18px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(index + 1, 60, y + 22);
-            
-            // Add footer at the bottom of the strip if this is the last photo
+            // Add footer text if this is the last photo
             if (index === photoStrip.length - 1) {
-                ctx.fillStyle = '#555';
-                ctx.font = '16px Arial';
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold 28px Anton, sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('Thanks for using our Photo Booth!', stripWidth / 2, stripHeight - 40);
+                ctx.fillText('BACK TO', stripWidth/2, y + photoHeight + spacing + 40);
+                ctx.fillText('OFFICE', stripWidth/2, y + photoHeight + spacing + 75);
             }
         };
         img.src = photoURL;
