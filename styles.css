@@ -1,0 +1,453 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #7952b3;
+    --secondary-color: #5a41a0;
+    --success-color: #42bca3;
+    --warning-color: #ff9e00;
+    --background-color: #f8f9fa;
+    --text-color: #212529;
+    --light-gray: #e9ecef;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    background-image: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Booth section */
+.booth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    animation: slideIn 1s ease-in-out;
+}
+
+.camera-container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    height: 480px;
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.camera-container:hover {
+    transform: translateY(-5px);
+}
+
+#camera {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 1.5rem;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+}
+
+.camera-overlay i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+.countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    z-index: 15;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.countdown.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.photo-count {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 5;
+    backdrop-filter: blur(5px);
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn i {
+    font-size: 1.2rem;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: #6842a0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.btn.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn.success:hover {
+    background-color: #37a890;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.btn.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn.secondary:hover {
+    background-color: #4a3590;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.btn.warning {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+.btn.warning:hover {
+    background-color: #e68f00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none;
+}
+
+/* Preview Container */
+.preview-container {
+    margin-top: 40px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.preview-container h2 {
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Updated photo strip preview for vertical layout with 3 photos and better spacing */
+.photo-strip-preview {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 30px 20px;
+    gap: 40px; /* Increased gap between photos */
+    min-height: 550px; /* Adjusted for 3 photos */
+}
+
+.strip-placeholder {
+    color: #adb5bd;
+    font-size: 1.2rem;
+    font-style: italic;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.photo-cell {
+    width: 100%;
+    height: 130px; /* Slightly bigger photos */
+    border-radius: calc(var(--border-radius) - 2px);
+    overflow: hidden;
+    background-color: var(--light-gray);
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 15px; /* Additional spacing */
+}
+
+.photo-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.photo-cell.loaded img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.photo-cell.loaded {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.photo-cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-gray);
+    z-index: 1;
+}
+
+.photo-cell.loaded::before {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Gallery */
+.gallery {
+    margin-top: 40px;
+    animation: fadeIn 1s ease-in-out 0.3s both;
+}
+
+.gallery h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.photo-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#photoGallery {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+}
+
+#photoGallery canvas {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    color: #6c757d;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 0.5s;
+}
+
+/* Flash effect */
+.flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+    .photo-strip-preview {
+        min-height: 480px;
+        gap: 30px;
+    }
+    .photo-cell {
+        height: 110px;
+    }
+}
+
+@media (max-width: 768px) {
+    .camera-container {
+        height: 360px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .camera-container {
+        height: 300px;
+    }
+    
+    .countdown {
+        font-size: 6rem;
+    }
+    
+    .photo-strip-preview {
+        min-height: 400px;
+        gap: 25px;
+    }
+    
+    .photo-cell {
+        height: 100px;
+    }
+}

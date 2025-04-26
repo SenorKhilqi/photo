@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Photo Booth</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Photo Booth</h1>
+            <p>Take 3 photos to create your photo strip!</p>
+        </header>
+
+        <main>
+            <div class="booth">
+                <div class="camera-container">
+                    <video id="camera" autoplay playsinline></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div class="camera-overlay" id="cameraOverlay">
+                        <i class="fas fa-camera-retro"></i>
+                        <p>Camera not active</p>
+                    </div>
+                    <div id="countdown" class="countdown"></div>
+                    <div id="photoCount" class="photo-count">0/3</div>
+                </div>
+
+                <div class="controls">
+                    <button id="startCamera" class="btn primary"><i class="fas fa-video"></i> Start Camera</button>
+                    <button id="takePhotos" class="btn success" disabled><i class="fas fa-camera"></i> Take 3 Photos</button>
+                    <button id="resetPhotos" class="btn warning" disabled><i class="fas fa-redo"></i> Reset</button>
+                    <button id="downloadPhotoStrip" class="btn secondary" disabled><i class="fas fa-download"></i> Download Strip</button>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <h2>Your Photo Strip</h2>
+                <div id="photoStripPreview" class="photo-strip-preview">
+                    <div class="strip-placeholder">Your photos will appear here</div>
+                </div>
+            </div>
+            
+            <div class="gallery" id="photoGallery" style="display: none;">
+                <h2>Saved Photo Strips</h2>
+                <div id="photos" class="photo-grid"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; Senor kilki</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
